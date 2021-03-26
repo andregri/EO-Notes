@@ -20,7 +20,7 @@ For the __central limit theorem__, the in-phase and the in-quadrature components
 
 The phase is important in SAR interferometry / tomography: the phase difference of 2 radar images is used to estimate distances, slow movements of the terrain or height differences. The phase difference is correlated to the properties of the observed surface.
 
-![SAR intensities](/img/sar_intensity.png)
+![SAR intensities](img/sar_intensity.png)
 
 The __speckle__ is the stochastic process `s(m,n) = i(m,n) / r(m,n)`
 - is exponential distributed
@@ -45,7 +45,7 @@ The issues of this method are:
 - blurred edges
 - degraded spatial resolution
 
-![multilook](/img/multilook.png)
+![multilook](img/multilook.png)
 
 By using the average filter centred on pixel `(m,n)`, we assume that the pixels within the window are i.i.d.:
 - independent
@@ -72,7 +72,7 @@ The signal `r(m,n)` can be modelled as a deterministic signal where the image in
 
 The signal `r(m,n)` in the product model can be modelled as a stochastic process that characterizes the texture image region.
 
-![multilook](/img/texture.png)
+![multilook](img/texture.png)
 
 
 ## General formulation of the product model
@@ -94,3 +94,23 @@ So the intensity pdf of `i(m,n)` is:
 ```
 p_mn(i) = integral_0^+inf p(i|r) p_mn(r) dr
 ```
+
+
+## Speckle reduction methods
+
+- __Lee, Kuan, Frost filter__: based on on the minimum mean square error criterion. It is based on the linear regression of `r(m,n)` from `i(m,n)` and the sample-mean and sample-variance of `i(m,n)` are estimated locally from the image with a moving window.
+    - is an adaptive filter since its parameters changes across the image
+    - can be applied multiple times
+    - assumes that pixels within the window are i.i.d. to estimate the sample mean and variance
+    - independence is not realistic
+    - identical distribution is satisfied only in homogeneous regions, but not across the edges -> produces blurred edges and artifacts.
+
+- __Bayesian filters__: apply the Bayesian estimation theory to the pdf models.
+
+- __Wavelet-domain fitlers__: use multiscale wavelet transforms
+
+- __Probabilistic model-based filters__: use stochastic models (continuous valued Markov random fields) for the input radar image
+
+- __Variational filters__: use discretized versions of suitable partial differential equations (e.g. the speckle-reducing anisotropic diffusion filter)
+
+- __Non-local means filters__: replace the moving window by an appropriate sampling across the image to reduce the blurring effect.
