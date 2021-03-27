@@ -72,7 +72,7 @@ The signal `r(m,n)` can be modelled as a deterministic signal where the image in
 
 The signal `r(m,n)` in the product model can be modelled as a stochastic process that characterizes the texture image region.
 
-![multilook](img/texture.png)
+![sar textures](img/texture.png)
 
 
 ## General formulation of the product model
@@ -114,3 +114,53 @@ p_mn(i) = integral_0^+inf p(i|r) p_mn(r) dr
 - __Variational filters__: use discretized versions of suitable partial differential equations (e.g. the speckle-reducing anisotropic diffusion filter)
 
 - __Non-local means filters__: replace the moving window by an appropriate sampling across the image to reduce the blurring effect.
+
+
+## Classification
+
+For __Bayesian supervised classification__ pixels belonging to the same class are considered iid.
+
+If the radar image is L-look:
+
+- if a Gamma model is used for the pdf of `i` conditioned to each class `w_k`, `L` is known apriori and the mean of each class is estimated as the sample mean of the training pixels of that class.
+
+- Alternatively, the ENL can be considered as a second class parameter to be estimated from the sample mean and the sample variance.
+
+![classification](img/classification1.png)
+
+---
+Multilook despeckling
+![classification](img/classification2.png)
+![histogram](img/histogram2.png)
+
+---
+Kuan filter despeckling
+![classification](img/classification3.png)
+![histogram](img/histogram3.png)
+
+---
+Application to Agricultural areas from Optical+SAR
+
+6 bands in optical bands + 9 bands in microwave band (HH, HV, VV for P,L,C bands)
+
+![classification](img/agriculture1.png)
+
+After filtering of the data:
+![classification](img/agriculture2.png)
+![classification](img/agriculture3.png)
+
+
+## Multichannel SAR statistics
+
+Multichannel can be for __polarimetric__ or __multifrequency__ measurements:
+
+- there is a vector of phasors, that can be described by a circular Gaussian model
+- Multilooking is performed by averaging
+- the product model is valid but the pdfs are more complex parametric pdfs
+
+
+## Useful links
+
+- https://github.com/senbox-org/s1tbx
+- https://www.charles-deledalle.fr/pages/nlsar.php
+- https://github.com/mortcanty/CRCPython
